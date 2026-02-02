@@ -1,190 +1,129 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation } from "wouter";
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
-
-function clamp(n: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, n));
-}
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "wouter";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, Baby, Sparkles } from "lucide-react";
 
 function getNameFromQuery() {
   const p = new URLSearchParams(window.location.search);
   const raw = (p.get("to") || "").trim();
-  return raw.length ? raw : "my love";
+  return raw.length ? raw : "Cutie Pie";
 }
 
 export default function ValentinePage() {
   const [, navigate] = useLocation();
-  const [toName, setToName] = useState(() => getNameFromQuery());
-
+  const [toName] = useState(() => getNameFromQuery());
   const playAreaRef = useRef<HTMLDivElement | null>(null);
-  const [area, setArea] = useState({ w: 640, h: 320 });
-
-  const [yesPos, setYesPos] = useState(() => ({ x: 0, y: 0 }));
-  const yesSize = useMemo(() => ({ w: 148, h: 48 }), []);
+  const [area, setArea] = useState({ w: 0, h: 0 });
+  const [noPos, setNoPos] = useState({ x: 0, y: 0 });
+  const [isCelebrated, setIsCelebrated] = useState(false);
 
   useEffect(() => {
-    const el = playAreaRef.current;
-    if (!el) return;
-
-    const ro = new ResizeObserver(() => {
-      const r = el.getBoundingClientRect();
-      setArea({ w: r.width, h: r.height });
-    });
-
-    ro.observe(el);
-    const r = el.getBoundingClientRect();
-    setArea({ w: r.width, h: r.height });
-
-    return () => ro.disconnect();
+    const updateArea = () => {
+      if (playAreaRef.current) {
+        const r = playAreaRef.current.getBoundingClientRect();
+        setArea({ w: r.width, h: r.height });
+      }
+    };
+    window.addEventListener("resize", updateArea);
+    updateArea();
+    return () => window.removeEventListener("resize", updateArea);
   }, []);
 
-  useEffect(() => {
-    setYesPos({
-      x: area.w * 0.62 - yesSize.w / 2,
-      y: area.h * 0.56 - yesSize.h / 2,
-    });
-  }, [area.h, area.w, yesSize.h, yesSize.w]);
-
-  const moveYesSomewhereElse = () => {
-    const padding = 10;
-
-    const maxX = Math.max(0, area.w - yesSize.w - padding * 2);
-    const maxY = Math.max(0, area.h - yesSize.h - padding * 2);
-
-    const nx = padding + Math.random() * maxX;
-    const ny = padding + Math.random() * maxY;
-
-    setYesPos({ x: clamp(nx, padding, area.w - yesSize.w - padding), y: clamp(ny, padding, area.h - yesSize.h - padding) });
+  const moveNoButton = () => {
+    const padding = 20;
+    const btnW = 100;
+    const btnH = 40;
+    const nx = Math.random() * (area.w - btnW - padding * 2) + padding;
+    const ny = Math.random() * (area.h - btnH - padding * 2) + padding;
+    setNoPos({ x: nx, y: ny });
   };
 
-  const onYes = () => {
-    const q = new URLSearchParams();
-    q.set("to", toName);
-    navigate(`/celebrate?${q.toString()}`);
-  };
-
-  const onNo = () => {
-    // Static button: intentionally does not move.
-    // Just a playful little wiggle via native focus/active styles.
+  const handleYes = () => {
+    setIsCelebrated(true);
+    setTimeout(() => {
+      const q = new URLSearchParams();
+      q.set("to", toName);
+      navigate(`/celebrate?${q.toString()}`);
+    }, 1200);
   };
 
   return (
-    <main className="min-h-screen valentine-gradient noise">
-      <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-5 py-10 sm:px-8">
-        <header className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span
-              className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border bg-white/70 shadow-sm backdrop-blur"
-              data-testid="badge-heart"
-            >
-              <Heart className="h-5 w-5 text-[hsl(345_83%_55%)]" />
-            </span>
-            <div className="leading-tight">
-              <p className="text-xs font-medium text-[hsl(335_16%_35%)]" data-testid="text-tagline">
-                Valentine’s micro-site
-              </p>
-              <p className="font-serif text-lg font-semibold tracking-tight" data-testid="text-title">
-                Will you be my Valentine?
-              </p>
-            </div>
-          </div>
-          <Link
-            href={`/celebrate?to=${encodeURIComponent(toName)}`}
-            className="text-xs font-medium text-[hsl(335_16%_35%)] underline underline-offset-4 hover:text-[hsl(335_40%_14%)]"
-            data-testid="link-skip"
-          >
-            Skip →
-          </Link>
-        </header>
+    <main className="min-h-screen baby-pattern bg-[hsl(var(--background))] overflow-hidden relative">
+      {/* Decorative Baby Stickers */}
+      <div className="fixed top-4 left-4 w-12 h-12 text-primary opacity-40"><Baby size={48} /></div>
+      <div className="fixed top-4 right-4 w-12 h-12 text-primary opacity-40 rotate-12"><Heart size={48} /></div>
+      <div className="fixed bottom-4 left-4 w-12 h-12 text-primary opacity-40 -rotate-12"><Baby size={48} /></div>
+      <div className="fixed bottom-4 right-4 w-12 h-12 text-primary opacity-40"><Sparkles size={48} /></div>
 
-        <section className="mt-8 pop-in">
-          <div className="rounded-[28px] border bg-white/70 p-6 shadow-md backdrop-blur soft-glow sm:p-8">
-            <div className="grid gap-6 sm:gap-8">
-              <div className="grid gap-2">
-                <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl" data-testid="text-heading">
-                  Hey <span className="text-[hsl(345_83%_55%)]">{toName}</span>
-                </h1>
-                <p className="max-w-prose text-sm leading-relaxed text-[hsl(335_16%_35%)] sm:text-base" data-testid="text-subtitle">
-                  I made you a tiny page with one big question. Choose wisely.
-                </p>
-              </div>
-
-              <div className="grid gap-2">
-                <label
-                  className="text-xs font-semibold tracking-wide text-[hsl(335_16%_35%)]"
-                  htmlFor="to-name"
-                  data-testid="label-name"
-                >
-                  Dedicated to
-                </label>
-                <input
-                  id="to-name"
-                  value={toName}
-                  onChange={(e) => setToName(e.target.value)}
-                  placeholder="Enter their name"
-                  className="h-11 w-full rounded-2xl border bg-white/80 px-4 text-sm shadow-sm outline-none ring-offset-background transition focus:ring-2 focus:ring-[hsl(var(--ring))]"
-                  data-testid="input-name"
-                />
-                <p className="text-xs text-[hsl(335_16%_35%)]" data-testid="text-hint">
-                  Tip: share this link with <span className="font-semibold">?to=Name</span>
-                </p>
-              </div>
-
-              <div
-                ref={playAreaRef}
-                className="relative overflow-hidden rounded-[26px] border bg-gradient-to-b from-white/70 to-white/40 p-4 shadow-sm sm:p-5"
-                data-testid="panel-buttons"
+      <div className="max-w-xl mx-auto min-h-screen flex flex-col items-center justify-center p-6 relative z-10">
+        <motion.div 
+          className="bg-white/90 backdrop-blur-md border-4 border-primary/20 p-8 rounded-[3rem] shadow-2xl text-center w-full relative overflow-hidden"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+        >
+          {/* Harry Potter Style Firecracker Overlay */}
+          <AnimatePresence>
+            {isCelebrated && (
+              <motion.div 
+                className="absolute inset-0 z-50 flex items-center justify-center bg-primary"
+                initial={{ clipPath: "circle(0% at 50% 50%)" }}
+                animate={{ clipPath: "circle(150% at 50% 50%)" }}
+                transition={{ duration: 0.8, ease: "easeIn" }}
               >
-                <div className="pointer-events-none absolute inset-0 opacity-70">
-                  <div className="absolute -left-10 -top-10 h-44 w-44 rounded-full bg-[hsl(345_83%_55%_/_0.20)] blur-2xl" />
-                  <div className="absolute -right-14 top-10 h-52 w-52 rounded-full bg-[hsl(290_85%_64%_/_0.18)] blur-2xl" />
-                  <div className="absolute left-1/2 bottom-[-50px] h-56 w-56 -translate-x-1/2 rounded-full bg-[hsl(35_95%_55%_/_0.10)] blur-2xl" />
+                <div className="text-white text-4xl font-bold flex flex-col items-center gap-4">
+                  <motion.div animate={{ rotate: 360, scale: [1, 2, 1] }} transition={{ duration: 0.5 }}>✨ 💥 ✨</motion.div>
+                  <p className="font-serif italic text-2xl">Incendio!</p>
                 </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-                <p className="relative z-10 mb-3 text-xs font-semibold tracking-wide text-[hsl(335_16%_35%)]" data-testid="text-instructions">
-                  Try to click “Yes”. (It’s a little shy.)
-                </p>
+          <motion.div className="waddle inline-block mb-4">
+            <img 
+              src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp4MG8zbjN0ZzZneHhyZWgxZzZneHhyZWgxZzZneHhyZWgxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/X88nB71Qc2C5G/giphy.gif" 
+              alt="Cute baby" 
+              className="w-32 h-32 object-contain rounded-full border-4 border-primary/10"
+            />
+          </motion.div>
+          
+          <h2 className="text-xl font-bold text-primary mb-2">Tag Line: Will you be my valentine?</h2>
+          <h1 className="text-4xl font-serif font-black text-foreground mb-8">
+            Hello, <span className="text-primary italic">{toName}</span>!
+          </h1>
 
-                <div className="relative z-10 h-[220px] sm:h-[240px]" data-testid="area-play">
-                  <button
-                    type="button"
-                    onClick={onNo}
-                    className="absolute left-4 top-4 inline-flex h-12 items-center justify-center rounded-2xl border bg-white/85 px-6 text-sm font-semibold text-[hsl(335_40%_14%)] shadow-sm backdrop-blur transition active:scale-[0.98]"
-                    data-testid="button-no"
-                  >
-                    No
-                  </button>
-
-                  <motion.button
-                    type="button"
-                    onClick={onYes}
-                    onMouseEnter={moveYesSomewhereElse}
-                    onFocus={moveYesSomewhereElse}
-                    onPointerDownCapture={moveYesSomewhereElse}
-                    animate={{ x: yesPos.x, y: yesPos.y }}
-                    transition={{ type: "spring", stiffness: 520, damping: 26 }}
-                    className="absolute inline-flex h-12 items-center justify-center rounded-2xl bg-[hsl(345_83%_55%)] px-6 text-sm font-semibold text-white shadow-md shadow-[hsl(345_83%_45%_/_0.25)] transition hover:brightness-105 active:scale-[0.98]"
-                    style={{ width: yesSize.w }}
-                    data-testid="button-yes"
-                  >
-                    Yes
-                  </motion.button>
-
-                  <div className="pointer-events-none absolute bottom-3 left-3 right-3 rounded-2xl bg-white/70 px-4 py-3 text-xs text-[hsl(335_16%_35%)] shadow-sm backdrop-blur" data-testid="note-footer">
-                    If the Yes button keeps escaping, try tapping it quickly.
-                  </div>
-                </div>
-              </div>
+          <div 
+            ref={playAreaRef}
+            className="h-64 border-2 border-dashed border-primary/20 rounded-[2rem] bg-primary/5 relative overflow-hidden"
+          >
+            <div className="absolute inset-0 flex items-center justify-center gap-8">
+              <motion.button
+                onClick={handleYes}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-6 bg-primary text-white text-2xl font-black rounded-full shadow-lg z-20"
+                data-testid="button-yes"
+              >
+                YES!
+              </motion.button>
             </div>
-          </div>
 
-          <footer className="mt-6 flex items-center justify-center">
-            <p className="text-xs text-[hsl(335_16%_35%)]" data-testid="text-footer">
-              Made with courage and a tiny bit of chaos.
-            </p>
-          </footer>
-        </section>
+            <motion.button
+              onMouseEnter={moveNoButton}
+              onFocus={moveNoButton}
+              animate={{ x: noPos.x, y: noPos.y }}
+              transition={{ type: "spring", stiffness: 1000, damping: 20 }}
+              className="absolute pointer-events-auto px-6 py-2 bg-slate-200 text-slate-500 rounded-full font-bold cursor-not-allowed opacity-80"
+              style={{ top: 0, left: 0 }}
+              data-testid="button-no"
+            >
+              No
+            </motion.button>
+          </div>
+          
+          <p className="mt-6 text-sm text-muted-foreground italic">
+            (P.S. There is only one right answer!)
+          </p>
+        </motion.div>
       </div>
     </main>
   );

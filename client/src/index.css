@@ -61,133 +61,47 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.08);
 
-  /* Valentine theme */
-  --background: 330 50% 98%;
-  --foreground: 335 40% 14%;
+  /* Cute Baby/Funny Theme */
+  --background: 195 100% 98%;
+  --foreground: 195 90% 15%;
 
   --card: 0 0% 100%;
-  --card-foreground: 335 40% 14%;
-  --card-border: 330 35% 90%;
+  --card-foreground: 195 90% 15%;
+  --card-border: 195 30% 90%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 335 40% 14%;
+  --popover-foreground: 195 90% 15%;
 
-  --primary: 345 83% 55%;
+  --primary: 330 90% 65%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 330 45% 94%;
-  --secondary-foreground: 335 40% 18%;
+  --secondary: 45 100% 92%;
+  --secondary-foreground: 45 90% 20%;
 
-  --muted: 330 35% 93%;
-  --muted-foreground: 335 16% 35%;
+  --muted: 195 20% 93%;
+  --muted-foreground: 195 15% 45%;
 
-  --accent: 290 85% 64%;
+  --accent: 265 85% 75%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 78% 55%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 330 35% 88%;
-  --input: 330 35% 86%;
-  --ring: 345 83% 55%;
+  --border: 195 30% 88%;
+  --input: 195 30% 86%;
+  --ring: 330 90% 65%;
 
-  --chart-1: 345 83% 55%;
-  --chart-2: 290 85% 64%;
-  --chart-3: 210 90% 56%;
-  --chart-4: 35 95% 55%;
-  --chart-5: 160 70% 42%;
+  --font-sans: "Quicksand", "DM Sans", ui-sans-serif, system-ui;
+  --font-serif: "Playfair Display", ui-serif, Georgia;
+  --font-mono: ui-monospace;
 
-  --sidebar: 0 0% 100%;
-  --sidebar-foreground: 335 40% 14%;
-  --sidebar-border: 330 35% 90%;
-  --sidebar-primary: 345 83% 55%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 330 45% 94%;
-  --sidebar-accent-foreground: 335 40% 18%;
-  --sidebar-ring: 345 83% 55%;
+  --radius: 2rem;
 
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times,
-    serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
 
-  --radius: 1rem;
-
-  --shadow-2xs: 0 1px 0 0 hsl(335 40% 14% / 0.03);
-  --shadow-xs: 0 1px 0 0 hsl(335 40% 14% / 0.04);
-  --shadow-sm: 0 1px 0 0 hsl(335 40% 14% / 0.05), 0 8px 24px -18px hsl(335 40% 14% / 0.35);
-  --shadow: 0 1px 0 0 hsl(335 40% 14% / 0.06), 0 18px 50px -26px hsl(345 83% 30% / 0.35);
-  --shadow-md: 0 1px 0 0 hsl(335 40% 14% / 0.06), 0 28px 80px -34px hsl(345 83% 30% / 0.40);
-  --shadow-lg: 0 1px 0 0 hsl(335 40% 14% / 0.06), 0 44px 120px -44px hsl(345 83% 30% / 0.45);
-  --shadow-xl: 0 1px 0 0 hsl(335 40% 14% / 0.06), 0 64px 160px -56px hsl(345 83% 30% / 0.55);
-  --shadow-2xl: 0 1px 0 0 hsl(335 40% 14% / 0.06), 0 90px 220px -70px hsl(345 83% 30% / 0.60);
-
-  --tracking-normal: 0em;
   --spacing: 0.25rem;
-
-  --sidebar-primary-border: hsl(var(--sidebar-primary));
-  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-  --sidebar-accent-border: hsl(var(--sidebar-accent));
-  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-  --primary-border: hsl(var(--primary));
-  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-  --secondary-border: hsl(var(--secondary));
-  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-  --muted-border: hsl(var(--muted));
-  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-  --accent-border: hsl(var(--accent));
-  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-  --destructive-border: hsl(var(--destructive));
-  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-}
-
-.dark {
-  --button-outline: rgba(255, 255, 255, 0.1);
-  --badge-outline: rgba(255, 255, 255, 0.05);
-  --opaque-button-border-intensity: 9;
-  --elevate-1: rgba(255, 255, 255, 0.04);
-  --elevate-2: rgba(255, 255, 255, 0.09);
-
-  --background: 330 25% 10%;
-  --foreground: 330 35% 96%;
-  --card: 330 23% 12%;
-  --card-foreground: 330 35% 96%;
-  --card-border: 330 15% 22%;
-  --popover: 330 23% 12%;
-  --popover-foreground: 330 35% 96%;
-  --primary: 345 83% 58%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 330 18% 16%;
-  --secondary-foreground: 330 35% 96%;
-  --muted: 330 18% 16%;
-  --muted-foreground: 330 16% 72%;
-  --accent: 290 85% 64%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 78% 55%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 330 15% 22%;
-  --input: 330 15% 26%;
-  --ring: 345 83% 58%;
-
-  --sidebar: 330 23% 12%;
-  --sidebar-foreground: 330 35% 96%;
-  --sidebar-border: 330 15% 22%;
-  --sidebar-primary: 345 83% 58%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 330 18% 16%;
-  --sidebar-accent-foreground: 330 35% 96%;
-  --sidebar-ring: 345 83% 58%;
-
-  --shadow-2xs: 0 1px 0 0 hsl(0 0% 0% / 0.35);
-  --shadow-xs: 0 1px 0 0 hsl(0 0% 0% / 0.38);
-  --shadow-sm: 0 1px 0 0 hsl(0 0% 0% / 0.40), 0 12px 30px -20px hsl(345 83% 45% / 0.55);
-  --shadow: 0 1px 0 0 hsl(0 0% 0% / 0.45), 0 20px 60px -30px hsl(345 83% 45% / 0.55);
-  --shadow-md: 0 1px 0 0 hsl(0 0% 0% / 0.45), 0 30px 90px -40px hsl(345 83% 45% / 0.60);
-  --shadow-lg: 0 1px 0 0 hsl(0 0% 0% / 0.45), 0 44px 120px -44px hsl(345 83% 45% / 0.65);
-  --shadow-xl: 0 1px 0 0 hsl(0 0% 0% / 0.45), 0 70px 170px -60px hsl(345 83% 45% / 0.70);
-  --shadow-2xl: 0 1px 0 0 hsl(0 0% 0% / 0.45), 0 90px 220px -70px hsl(345 83% 45% / 0.75);
 }
 
 @layer base {
@@ -208,52 +122,33 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.06;
+    opacity: 0.05;
     mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-    background-size: 160px 160px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  @keyframes floaty {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-6px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
+  .baby-pattern {
+    background-image: radial-gradient(circle at 2px 2px, hsl(195 100% 92%) 1px, transparent 0);
+    background-size: 24px 24px;
   }
 
-  .floaty {
-    animation: floaty 3.2s ease-in-out infinite;
+  @keyframes waddle {
+    0% { transform: rotate(-5deg) translateY(0); }
+    50% { transform: rotate(5deg) translateY(-4px); }
+    100% { transform: rotate(-5deg) translateY(0); }
   }
 
-  @keyframes popIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0px) scale(1);
-    }
+  .waddle {
+    animation: waddle 1.5s ease-in-out infinite;
   }
 
-  .pop-in {
-    animation: popIn 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  @keyframes firecracker {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
   }
 
-  .valentine-gradient {
-    background-image:
-      radial-gradient(900px 520px at 12% 0%, hsl(345 83% 55% / 0.18) 0%, transparent 60%),
-      radial-gradient(900px 520px at 90% 10%, hsl(290 85% 64% / 0.16) 0%, transparent 62%),
-      radial-gradient(900px 520px at 50% 100%, hsl(35 95% 55% / 0.10) 0%, transparent 60%),
-      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(330 50% 96%) 55%, hsl(var(--background)) 100%);
-  }
-
-  .soft-glow {
-    box-shadow: 0 18px 80px -52px hsl(345 83% 45% / 0.70);
+  .firecracker {
+    animation: firecracker 0.8s ease-out forwards;
   }
 }
