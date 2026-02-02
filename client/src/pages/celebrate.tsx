@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { Heart, Sparkles, Stars } from "lucide-react";
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
+import gif1 from "@assets/Celebrate_Happy_Birthday_GIF_by_Sesame_Street_1770055379648.gif";
+import gif2 from "@assets/Cry_More_Real_Madrid_GIF_1770055379648.gif";
+import gif3 from "@assets/Fuck_Yeah_Reaction_GIF_1770055379648.gif";
+import gif4 from "@assets/celebration_GIF_1770055379647.gif";
 
 function getNameFromQuery() {
   const p = new URLSearchParams(window.location.search);
@@ -9,17 +13,15 @@ function getNameFromQuery() {
   return raw.length ? raw : "Cutie Pie";
 }
 
-const CELEBRATION_GIFS = [
-  "https://giphy.com/embed/gFi7V9CRBQVW0",
-  "https://giphy.com/embed/ktU8kAKsyIauRSOoZs",
-  "https://giphy.com/embed/doPrWYzSG1Vao",
-  "https://giphy.com/embed/QlvPwCTw59B2E",
-  "https://giphy.com/embed/Na33dsU2umStO"
-];
+const CELEBRATION_GIFS = [gif1, gif2, gif3, gif4];
 
 export default function CelebratePage() {
   const toName = getNameFromQuery();
   const [showCard, setShowCard] = useState(false);
+
+  const [selectedGif] = useState(() => {
+    return CELEBRATION_GIFS[Math.floor(Math.random() * CELEBRATION_GIFS.length)];
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,36 +47,33 @@ export default function CelebratePage() {
       </div>
 
       {!showCard ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-6xl relative z-10 p-4">
-          {CELEBRATION_GIFS.map((src, i) => (
-            <motion.div 
-              key={i}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: i * 0.2, type: "spring" }}
-              className="rounded-3xl overflow-hidden border-8 border-white/30 shadow-2xl"
-            >
-              <iframe src={src} width="100%" height="300" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
-            </motion.div>
-          ))}
-          <motion.div 
+        <div className="flex flex-col items-center gap-8 w-full max-w-2xl relative z-10 p-4">
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring" }}
+            className="w-full rounded-3xl overflow-hidden border-8 border-white/30 shadow-2xl bg-white"
+          >
+            <img src={selectedGif} alt="Celebration" className="w-full h-[400px] object-contain" />
+          </motion.div>
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 3 }}
-            className="col-span-full text-center text-white font-black text-3xl mt-8 animate-pulse"
+            className="text-center text-white font-black text-3xl animate-pulse"
           >
             GET READY...
           </motion.div>
         </div>
       ) : (
-        <motion.div 
+        <motion.div
           className="bg-white p-10 rounded-[3rem] shadow-2xl text-center max-w-lg relative z-10 border-8 border-white/50"
           initial={{ scale: 0.5, opacity: 0, y: 100 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ type: "spring", bounce: 0.5 }}
         >
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1] }} 
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
             transition={{ repeat: Infinity, duration: 1 }}
             className="inline-block text-primary mb-6"
           >
@@ -89,7 +88,7 @@ export default function CelebratePage() {
           </h2>
 
           <div className="flex justify-center gap-4 mb-8">
-            <motion.img 
+            <motion.img
               src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp4MG8zbjN0ZzZneHhyZWgxZzZneHhyZWgxZzZneHhyZWgxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/X88nB71Qc2C5G/giphy.gif"
               alt="Celebrating baby"
               className="w-24 h-24 rounded-full border-4 border-primary"
