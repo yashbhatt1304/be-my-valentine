@@ -33,6 +33,7 @@ export default function ValentinePage() {
     const padding = 20;
     const btnW = 100;
     const btnH = 40;
+    // Move rapidly and stay on top (z-index handled in JSX)
     const nx = Math.random() * (area.w - btnW - padding * 2) + padding;
     const ny = Math.random() * (area.h - btnH - padding * 2) + padding;
     setNoPos({ x: nx, y: ny });
@@ -44,12 +45,11 @@ export default function ValentinePage() {
       const q = new URLSearchParams();
       q.set("to", toName);
       navigate(`/celebrate?${q.toString()}`);
-    }, 1200);
+    }, 2500); // Increased delay to show firecracker and initial transition
   };
 
   return (
     <main className="min-h-screen baby-pattern bg-[hsl(var(--background))] overflow-hidden relative">
-      {/* Decorative Baby Stickers */}
       <div className="fixed top-4 left-4 w-12 h-12 text-primary opacity-40"><Baby size={48} /></div>
       <div className="fixed top-4 right-4 w-12 h-12 text-primary opacity-40 rotate-12"><Heart size={48} /></div>
       <div className="fixed bottom-4 left-4 w-12 h-12 text-primary opacity-40 -rotate-12"><Baby size={48} /></div>
@@ -61,7 +61,6 @@ export default function ValentinePage() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
-          {/* Harry Potter Style Firecracker Overlay */}
           <AnimatePresence>
             {isCelebrated && (
               <motion.div 
@@ -86,7 +85,7 @@ export default function ValentinePage() {
             />
           </motion.div>
           
-          <h2 className="text-xl font-bold text-primary mb-2">Tag Line: Will you be my valentine?</h2>
+          <h2 className="text-xl font-bold text-primary mb-2">Will you be my valentine?</h2>
           <h1 className="text-4xl font-serif font-black text-foreground mb-8">
             Hello, <span className="text-primary italic">{toName}</span>!
           </h1>
@@ -100,7 +99,7 @@ export default function ValentinePage() {
                 onClick={handleYes}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-12 py-6 bg-primary text-white text-2xl font-black rounded-full shadow-lg z-20"
+                className="px-12 py-6 bg-primary text-white text-2xl font-black rounded-full shadow-lg z-10"
                 data-testid="button-yes"
               >
                 YES!
@@ -111,8 +110,8 @@ export default function ValentinePage() {
               onMouseEnter={moveNoButton}
               onFocus={moveNoButton}
               animate={{ x: noPos.x, y: noPos.y }}
-              transition={{ type: "spring", stiffness: 1000, damping: 20 }}
-              className="absolute pointer-events-auto px-6 py-2 bg-slate-200 text-slate-500 rounded-full font-bold cursor-not-allowed opacity-80"
+              transition={{ type: "spring", stiffness: 1500, damping: 15 }} // More sensitive/rapid
+              className="absolute pointer-events-auto px-6 py-2 bg-slate-200 text-slate-500 rounded-full font-bold cursor-not-allowed opacity-90 z-30" // Higher z-index than Yes
               style={{ top: 0, left: 0 }}
               data-testid="button-no"
             >
