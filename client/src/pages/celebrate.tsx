@@ -2,18 +2,12 @@ import { motion } from "framer-motion";
 import { Heart, Sparkles, Stars } from "lucide-react";
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
-import gif1 from "@assets/Celebrate_Happy_Birthday_GIF_by_Sesame_Street_1770055379648.gif";
-import gif2 from "@assets/Cry_More_Real_Madrid_GIF_1770055379648.gif";
-import gif3 from "@assets/Fuck_Yeah_Reaction_GIF_1770055379648.gif";
-import gif4 from "@assets/celebration_GIF_1770055379647.gif";
-
-function getNameFromQuery() {
-  const p = new URLSearchParams(window.location.search);
-  const raw = (p.get("to") || "").trim();
-  return raw.length ? raw : "Cutie Pie";
-}
-
-const CELEBRATION_GIFS = [gif1, gif2, gif3, gif4];
+const CELEBRATION_GIFS = [
+  "/gifs/Celebrate_Happy_Birthday_GIF_by_Sesame_Street_1770055379648.gif",
+  "/gifs/Cry_More_Real_Madrid_GIF_1770055379648.gif",
+  "/gifs/Fuck_Yeah_Reaction_GIF_1770055379648.gif",
+  "/gifs/celebration_GIF_1770055379647.gif"
+];
 
 export default function CelebratePage() {
   const toName = getNameFromQuery();

@@ -10,12 +10,20 @@ function getNameFromQuery() {
 }
 
 export default function ValentinePage() {
-  const [, navigate] = useLocation();
+  const [, navigate] = useLocation(); // Keep navigate if needed for other things, but we removed it. Actually I can remove useLocation if unused. But let's keep it safe.
   const [toName] = useState(() => getNameFromQuery());
   const playAreaRef = useRef<HTMLDivElement | null>(null);
   const [area, setArea] = useState({ w: 0, h: 0 });
   const [noPos, setNoPos] = useState({ x: 0, y: 0 });
   const [isCelebrated, setIsCelebrated] = useState(false);
+  const [gifUrl, setGifUrl] = useState("/gifs/celebration_GIF_1770055379647.gif");
+
+  const gifs = [
+    "/gifs/Celebrate_Happy_Birthday_GIF_by_Sesame_Street_1770055379648.gif",
+    "/gifs/Cry_More_Real_Madrid_GIF_1770055379648.gif",
+    "/gifs/Fuck_Yeah_Reaction_GIF_1770055379648.gif",
+    "/gifs/celebration_GIF_1770055379647.gif"
+  ];
 
   useEffect(() => {
     const updateArea = () => {
@@ -40,12 +48,9 @@ export default function ValentinePage() {
   };
 
   const handleYes = () => {
+    const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+    setGifUrl(randomGif);
     setIsCelebrated(true);
-    setTimeout(() => {
-      const q = new URLSearchParams();
-      q.set("to", toName);
-      navigate(`/celebrate?${q.toString()}`);
-    }, 2500); // Increased delay to show firecracker and initial transition
   };
 
   return (
@@ -56,41 +61,47 @@ export default function ValentinePage() {
       <div className="fixed bottom-4 right-4 w-12 h-12 text-primary opacity-40"><Sparkles size={48} /></div>
 
       <div className="max-w-xl mx-auto min-h-screen flex flex-col items-center justify-center p-6 relative z-10">
-        <motion.div 
+        <motion.div
           className="bg-white/90 backdrop-blur-md border-4 border-primary/20 p-8 rounded-[3rem] shadow-2xl text-center w-full relative overflow-hidden"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
           <AnimatePresence>
             {isCelebrated && (
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 z-50 flex items-center justify-center bg-primary"
                 initial={{ clipPath: "circle(0% at 50% 50%)" }}
                 animate={{ clipPath: "circle(150% at 50% 50%)" }}
                 transition={{ duration: 0.8, ease: "easeIn" }}
               >
-                <div className="text-white text-4xl font-bold flex flex-col items-center gap-4">
+                <div className="text-white text-4xl font-bold flex flex-col items-center gap-4 text-center p-4">
+                  <motion.img
+                    src={gifUrl}
+                    alt="Celebration"
+                    className="w-full max-w-sm h-auto object-contain rounded-xl border-4 border-white/50 mb-4"
+                    animate={{ scale: [0.95, 1.05, 1] }}
+                  />
                   <motion.div animate={{ rotate: 360, scale: [1, 2, 1] }} transition={{ duration: 0.5 }}>✨ 💥 ✨</motion.div>
-                  <p className="font-serif italic text-2xl">Incendio!</p>
+                  <p className="font-serif italic text-2xl">You're My Heart, My Soul, My Valentine, {toName}</p>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
           <motion.div className="waddle inline-block mb-4">
-            <img 
-              src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp4MG8zbjN0ZzZneHhyZWgxZzZneHhyZWgxZzZneHhyZWgxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/X88nB71Qc2C5G/giphy.gif" 
-              alt="Cute baby" 
+            <img
+              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmF0MzZpNG05cWR2MzdzdXhjZjdmNjVnbjVyNXN4MzBoOXlpMno1dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7vDoUoDZHoUQxMPkd7/giphy.gif"
+              alt="Cute baby"
               className="w-32 h-32 object-contain rounded-full border-4 border-primary/10"
             />
           </motion.div>
-          
-          <h2 className="text-xl font-bold text-primary mb-2">Will you be my valentine?</h2>
-          <h1 className="text-4xl font-serif font-black text-foreground mb-8">
+
+          <h1 className="text-4xl font-serif font-black text-foreground mb-2">
             Hello, <span className="text-primary italic">{toName}</span>!
           </h1>
+          <h2 className="text-xl font-bold text-primary mb-8">Will you be my valentine?</h2>
 
-          <div 
+          <div
             ref={playAreaRef}
             className="h-64 border-2 border-dashed border-primary/20 rounded-[2rem] bg-primary/5 relative overflow-hidden"
           >
@@ -118,7 +129,7 @@ export default function ValentinePage() {
               No
             </motion.button>
           </div>
-          
+
           <p className="mt-6 text-sm text-muted-foreground italic">
             (P.S. There is only one right answer!)
           </p>
