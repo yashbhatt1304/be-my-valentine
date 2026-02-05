@@ -19,10 +19,21 @@ export default function ValentinePage() {
   const [gifUrl, setGifUrl] = useState("/gifs/celebration_GIF_1770055379647.gif");
 
   const gifs = [
+    "/gifs/Baby Winner GIF.gif",
     "/gifs/Celebrate_Happy_Birthday_GIF_by_Sesame_Street_1770055379648.gif",
     "/gifs/Cry_More_Real_Madrid_GIF_1770055379648.gif",
     "/gifs/Fuck_Yeah_Reaction_GIF_1770055379648.gif",
-    "/gifs/celebration_GIF_1770055379647.gif"
+    "/gifs/Fun Dancing GIF.gif",
+    "/gifs/Gas Chick GIF.gif",
+    "/gifs/Girl Car GIF by MOODMAN.gif",
+    "/gifs/Happy I Love You GIF.gif",
+    "/gifs/I Love You Chick GIF.gif",
+    "/gifs/I Love You Hearts GIF by Pudgy Penguins.gif",
+    "/gifs/Teddy Bear Dancing GIF.gif",
+    "/gifs/celebration_GIF_1770055379647.gif",
+    "/gifs/kawai teady bear GIF.gif",
+    "/gifs/liquidifikador GIF.gif",
+    "/gifs/ted GIF.gif"
   ];
 
   useEffect(() => {
